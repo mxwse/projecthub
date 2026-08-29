@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "strict": true,
+    "noUnusedLocals": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    /* Tests laufen ueber "node --test" und importieren mit .ts-Endung, weil
+       Node ESM-Importe ohne Endung nicht aufloest. Nur zulaessig zusammen mit
+       noEmit, und genau so laeuft das typecheck-Skript. */
+    "allowImportingTsExtensions": true,
+    "noEmit": true
+  },
+  "include": ["electron.vite.config.ts", "src/main/**/*", "src/preload/**/*", "src/shared/**/*"]
+}

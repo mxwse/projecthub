@@ -1,0 +1,247 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-raised: var(--raised);
+  --color-hover: var(--hover);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-dim: var(--dim);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-err: var(--err);
+  --color-info: var(--info);
+  --font-sans: 'IBM Plex Sans Variable', 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, Consolas, monospace;
+}
+
+/*
+  mxw-it-Design-System „Deutsches Ingenieurdokument" (24.07.2026):
+  Instrument-Panel-Charakter (Raster, Mono-Labels, Glow) bleibt, Palette und
+  Typo folgen jetzt der Marke — warmes Tinten-Dunkel + Signalorange statt
+  Blau-Dunkel + Acid-Grün. Referenz: Website_Ai/02-design-system.md.
+*/
+:root {
+  --bg: #121210;
+  --panel: #191914;
+  --raised: #1e1e18;
+  --hover: #24241c;
+  --line: #f4f4ef14;
+  --line-strong: #f4f4ef2b;
+  --ink: #f2f2ec;
+  --dim: #f4f4efab;
+  --faint: #f4f4ef70;
+  --accent: #ff6a35;
+  --accent-ink: #141410;
+  --ok: #55b585;
+  --warn: #d9a441;
+  --err: #ff6b5d;
+  --info: #7d9cc9;
+  --grid-line: rgba(244, 244, 239, 0.018);
+  --glow: rgba(232, 73, 15, 0.07);
+  color-scheme: dark;
+}
+
+:root.light {
+  --bg: #f4f4ef;
+  --panel: #fdfdfb;
+  --raised: #ffffff;
+  --hover: #ecece4;
+  --line: #e0e0d6;
+  --line-strong: #c7c7ba;
+  --ink: #141410;
+  --dim: #565650;
+  --faint: #8f8f85;
+  --accent: #c23a08;
+  --accent-ink: #ffffff;
+  --ok: #1c7c44;
+  --warn: #a16207;
+  --err: #b3261e;
+  --info: #38517b;
+  --grid-line: rgba(20, 20, 16, 0.03);
+  --glow: rgba(232, 73, 15, 0.05);
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  user-select: none;
+}
+
+input,
+textarea {
+  user-select: text;
+}
+
+/* Instrument-Panel-Atmosphäre: feines Raster + Vignette */
+.app-surface {
+  background-image:
+    radial-gradient(ellipse 80% 60% at 70% -10%, var(--glow), transparent),
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    44px 44px,
+    44px 44px;
+}
+
+/* Mono-Labels im Instrumenten-Stil */
+.t-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--faint);
+  background-clip: content-box;
+}
+
+/* Einstiegsanimationen */
+
+/* Marken-Kurve des Design-Systems. Vorher stand an drei Stellen
+   var(--ease-expo), also eine andere Kurve als in allen
+   anderen mxw-it-Projekten. */
+:root {
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.anim-rise {
+  animation: rise 0.4s var(--ease-expo) both;
+}
+
+.anim-pop {
+  animation: pop 0.22s var(--ease-expo) both;
+}
+
+.anim-toast {
+  animation: slide-in-right 0.25s var(--ease-expo) both;
+}
+
+/* Statuspunkt mit Puls für aktive Projekte */
+@keyframes pulse-dot {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 4px transparent;
+  }
+}
+
+.dot-pulse {
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+/* Fokus-Stil */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* Range-Slider */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--line-strong);
+  cursor: pointer;
+}
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: var(--accent);
+  border: none;
+}
+
+
+/*
+  Bewegung abschalten, wenn das System es verlangt. Fehlte bisher komplett,
+  obwohl rise, pop, slide-in-right und pulse-dot dauerhaft laufen. Gilt auch
+  fuer eine Desktop-Anwendung: die Einstellung kommt vom Betriebssystem.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

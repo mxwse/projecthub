@@ -1,0 +1,20 @@
+appId: dev.max.projecthub
+productName: ProjectHub
+directories:
+  output: release
+files:
+  - out/**
+  - package.json
+  - node_modules/sql.js/dist/sql-wasm.wasm
+  - node_modules/sql.js/dist/sql-wasm.js
+  - node_modules/sql.js/package.json
+  - node_modules/@homebridge/node-pty-prebuilt-multiarch/**
+asarUnpack:
+  - node_modules/sql.js/**
+  - node_modules/@homebridge/node-pty-prebuilt-multiarch/**
+win:
+  target:
+    - nsis
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
